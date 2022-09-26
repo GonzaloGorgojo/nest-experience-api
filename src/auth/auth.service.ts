@@ -6,13 +6,15 @@
  * @file   This file defines the AuthService class.
  * @author Gonzalo Gorgojo.
  */
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { LoginOutput } from './dto/loginOutput.dto';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(private jwtService: JwtService) {}
 
   private readonly user = {
@@ -30,12 +32,17 @@ export class AuthService {
    * @return access token if it works, throws unauthorized if not.
    */
   async login(user: LoginDto): Promise<LoginOutput> {
-    if (this.user && this.user.password === user.password) {
-      const payload = { username: user.username, sub: this.user.userId };
-      return {
-        accessToken: this.jwtService.sign(payload),
-      };
+    try {
+      if (this.user && this.user.password === user.password) {
+        const payload = { username: user.username, sub: this.user.userId };
+        return {
+          accessToken: this.jwtService.sign(payload),
+        };
+      }
+      throw new UnauthorizedException();
+    } catch (error) {
+      this.logger.error(`Error method: login}`);
+      throw error;
     }
-    throw new UnauthorizedException();
   }
 }

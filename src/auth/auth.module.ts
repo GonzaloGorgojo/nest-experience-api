@@ -12,16 +12,19 @@ import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './model/admin.entity';
 
 @Module({
   imports: [
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: process.env.APP_JWTSECRET,
-        signOptions: { expiresIn: '60s' },
+        signOptions: { expiresIn: '1h' },
       }),
     }),
     PassportModule,
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
   providers: [JwtStrategy, AuthService],

@@ -1,15 +1,9 @@
-import {
-  Controller,
-  Post,
-  UseGuards,
-  Request,
-  Get,
-  Body,
-} from '@nestjs/common';
+import { Controller, Post, UseGuards, Body } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { LoginOutput } from './dto/loginOutput.dto';
+import { User } from './model/admin.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -21,8 +15,8 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/profile')
-  getProfile(@Request() req: any) {
-    return req.user;
+  @Post('/create')
+  async create(@Body() user: User): Promise<User> {
+    return this.authService.create(user);
   }
 }

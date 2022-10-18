@@ -6,22 +6,40 @@
  * @file   This file defines the AuthService class.
  * @author Gonzalo Gorgojo.
  */
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { LoginDto } from './dto/login.dto';
 import { LoginOutput } from './dto/loginOutput.dto';
+import { User } from './model/admin.entity';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
 
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
 
-  private readonly user = {
-    userId: 1,
-    username: 'john',
-    password: '1234',
-  };
+  /**
+   * @method findUsers
+   * Find all users in DB.
+   *
+   *
+   * @return list of users..
+   */
+  async findUsers(): Promise<User[]> {
+    return await this.usersRepository.find();
+  }
 
   /**
    * @method login
@@ -33,16 +51,32 @@ export class AuthService {
    */
   async login(user: LoginDto): Promise<LoginOutput> {
     try {
-      if (this.user && this.user.password === user.password) {
-        const payload = { username: user.username, sub: this.user.userId };
+      const users = await this.findUsers();
+
+      const admin = users.find(
+        (e) => e.username == user.username && e.password == user.password,
+      );
+
+      if (admin) {
+        const payload = { username: user.username, sub: admin.id };
         return {
           accessToken: this.jwtService.sign(payload),
         };
       }
       throw new UnauthorizedException();
     } catch (error) {
-      this.logger.error(`Error method: login}`);
+      this.logger.error(`Error method: login`);
       throw error;
+    }
+  }
+
+  async create(user: User): Promise<User> {
+    try {
+      return await this.usersRepository.save(user);
+    } catch (error) {
+      this.logger.error(`Error method: create`);
+
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }

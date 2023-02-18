@@ -22,7 +22,9 @@
     "typeorm": "typeorm-ts-node-commonjs -d ./src/ormDataSource.ts",
     "typeorm:create": "npm run typeorm migration:create -- -n",
     "typeorm:migrate": "npm run typeorm migration:generate -- ./migrations/$npm_config_name",
-    "typeorm:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/ormDataSource.ts"
+    "typeorm:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/ormDataSource.ts",
+    "typeorm:revert": "npm run typeorm migration:revert",
+    "seed": "npx ts-node src/database/seed.ts"
   },
   "dependencies": {
     "@nestjs/axios": "^0.1.0",

@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14
+    container_name: portfolio-local-db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - '5432:5432'
+    hostname: localhost
+    env_file:
+      - .env

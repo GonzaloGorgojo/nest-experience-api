@@ -4,7 +4,8 @@ import { HttpModule } from '@nestjs/axios';
 import { TerminusModule } from '@nestjs/terminus';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ExperienceModule } from './experience/experience.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -14,15 +15,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     AuthModule,
     TerminusModule,
     HttpModule,
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'portfolio.db',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-      autoLoadEntities: true,
-      migrations: [`${__dirname}/../migrations/**/*{.ts,.js}`],
-      migrationsTransactionMode: 'all',
-    }),
+    ExperienceModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [],

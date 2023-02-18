@@ -6,16 +6,9 @@
  * @file   This file defines the AuthService class.
  * @author Gonzalo Gorgojo.
  */
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  Logger,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { LoginDto } from './dto/login.dto';
 import { LoginOutput } from './dto/loginOutput.dto';
 import { User } from './model/admin.entity';
@@ -26,57 +19,54 @@ export class AuthService {
 
   constructor(
     private jwtService: JwtService,
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private readonly dataSource: DataSource,
   ) {}
-
-  /**
-   * @method findUsers
-   * Find all users in DB.
-   *
-   *
-   * @return list of users..
-   */
-  async findUsers(): Promise<User[]> {
-    return await this.usersRepository.find();
-  }
 
   /**
    * @method login
    * Check if user and password exist and return a signed jwt
    *
-   * @param {LoginDto} user dto input
+   * @param {LoginDto} user dto input data to login.
    *
    * @return access token if it works, throws unauthorized if not.
    */
   async login(user: LoginDto): Promise<LoginOutput> {
     try {
-      const users = await this.findUsers();
+      const users = await this.dataSource.manager.find(User);
 
       const admin = users.find(
         (e) => e.username == user.username && e.password == user.password,
       );
 
-      if (admin) {
-        const payload = { username: user.username, sub: admin.id };
-        return {
-          accessToken: this.jwtService.sign(payload),
-        };
-      }
-      throw new UnauthorizedException();
+      if (!admin) throw new UnauthorizedException();
+
+      const payload = { username: admin.username, sub: admin.id };
+      const loginResponse = new LoginOutput();
+      loginResponse.accessToken = this.jwtService.sign(payload);
+
+      return loginResponse;
     } catch (error) {
-      this.logger.error(`Error method: login`);
+      if (error.name != 'UnauthorizedException') {
+        this.logger.error(`Error method: login`);
+      }
       throw error;
     }
   }
 
-  async create(user: User): Promise<User> {
+  /**
+   * @method createAdminUser
+   *
+   * @param {User} user dto to create.
+   *
+   * @returns {User} created resource.
+   */
+  async createAdminUser(user: User): Promise<User> {
     try {
-      return await this.usersRepository.save(user);
+      return this.dataSource.manager.save(User, user);
     } catch (error) {
-      this.logger.error(`Error method: create`);
+      this.logger.error(`Error method: createAdminUser`);
 
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+      throw error;
     }
   }
 }

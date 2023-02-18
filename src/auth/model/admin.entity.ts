@@ -1,13 +1,21 @@
+/**
+ * User entity.
+ *
+ * Definition for User entity.
+ *
+ * @file   This file defines the Organization class.
+ * @author Gonzalo Gorgojo.
+ */
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('user')
-export class User {
+@Entity('Admin')
+export class Admin {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   username: string;
 
-  @Column()
+  @Column({ nullable: false })
   password: string;
 }

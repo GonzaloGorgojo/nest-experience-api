@@ -8,7 +8,7 @@
  */
 import { Injectable, Logger } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { User } from '../auth/model/admin.entity';
+import { Admin } from '../auth/model/admin.entity';
 
 @Injectable()
 export class DatabaseService {
@@ -33,7 +33,7 @@ export class DatabaseService {
         },
       ];
 
-      const userRepository = this.dataSource.getRepository(User);
+      const userRepository = this.dataSource.getRepository(Admin);
       await userRepository.save(adminData);
       await queryRunner.commitTransaction();
     } catch (error) {

@@ -11,7 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { DataSource } from 'typeorm';
 import { LoginDto } from './dto/login.dto';
 import { LoginOutput } from './dto/loginOutput.dto';
-import { User } from './model/admin.entity';
+import { Admin } from './model/admin.entity';
 
 @Injectable()
 export class AuthService {
@@ -32,7 +32,7 @@ export class AuthService {
    */
   async login(user: LoginDto): Promise<LoginOutput> {
     try {
-      const users = await this.dataSource.manager.find(User);
+      const users = await this.dataSource.manager.find(Admin);
 
       const admin = users.find(
         (e) => e.username == user.username && e.password == user.password,
@@ -49,23 +49,6 @@ export class AuthService {
       if (error.name != 'UnauthorizedException') {
         this.logger.error(`Error method: login`);
       }
-      throw error;
-    }
-  }
-
-  /**
-   * @method createAdminUser
-   *
-   * @param {User} user dto to create.
-   *
-   * @returns {User} created resource.
-   */
-  async createAdminUser(user: User): Promise<User> {
-    try {
-      return this.dataSource.manager.save(User, user);
-    } catch (error) {
-      this.logger.error(`Error method: createAdminUser`);
-
       throw error;
     }
   }

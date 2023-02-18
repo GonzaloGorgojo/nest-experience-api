@@ -2,8 +2,8 @@
 
 ## Description
 
-This is an API built with NestJS. The purpose of this API is to provide endpoints for a frontend application to consume in order to retrieve and manage my education and work experience. <br>
-The Api got a login option that uses JWT security to use the post methods.
+This is an API built with NestJS. The purpose of this API is to provide endpoints for a frontend application to consume in order to retrieve and manage education and work experience from users. I will use it in my personal webpage <br>
+The Api got a login option that uses JWT security, this was made to do all operations except the ones that read data.
 
 ### :computer: Technologies used
 
@@ -12,6 +12,7 @@ The Api got a login option that uses JWT security to use the post methods.
 - Docker
 - PostgresSql
 - JWT
+- OpenApi/Swagger
 
 ## To run this API, you will need to have the following installed on your machine:
 

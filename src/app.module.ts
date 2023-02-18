@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { ExperienceModule } from './experience/experience.module';
 import { DatabaseModule } from './database/database.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { DatabaseModule } from './database/database.module';
     HttpModule,
     ExperienceModule,
     DatabaseModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [],

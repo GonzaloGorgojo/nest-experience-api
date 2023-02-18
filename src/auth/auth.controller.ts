@@ -6,12 +6,10 @@
  * @file   This file defines the AuthController controller.
  * @author Gonzalo Gorgojo.
  */
-import { Controller, Post, UseGuards, Body } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { LoginOutput } from './dto/loginOutput.dto';
-import { User } from './model/admin.entity';
 
 /**
  * Class Summary
@@ -27,11 +25,5 @@ export class AuthController {
   @Post('/login')
   async login(@Body() input: LoginDto): Promise<LoginOutput> {
     return this.authService.login(input);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('/create')
-  async createAdminUser(@Body() user: User): Promise<User> {
-    return this.authService.createAdminUser(user);
   }
 }

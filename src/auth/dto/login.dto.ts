@@ -6,7 +6,8 @@
  * @file   This file defines the login DTO.
  * @author Gonzalo Gorgojo.
  */
-import { IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 /**
  * Class Summary
@@ -16,8 +17,17 @@ import { IsString } from 'class-validator';
  * @class LoginDto
  */
 export class LoginDto {
+  @ApiProperty({
+    description: 'already created admin user',
+    type: String,
+    example: 'superUser',
+  })
   @IsString()
+  @IsNotEmpty({ message: 'password is required' })
   username: string;
+
+  @ApiProperty({ type: String, example: 'superPassword' })
   @IsString()
+  @IsNotEmpty({ message: 'password is required' })
   password: string;
 }

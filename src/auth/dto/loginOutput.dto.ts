@@ -7,6 +7,8 @@
  * @author Gonzalo Gorgojo.
  */
 
+import { ApiProperty } from '@nestjs/swagger';
+
 /**
  * Class Summary
  *
@@ -17,5 +19,10 @@
  */
 
 export class LoginOutput {
+  @ApiProperty({
+    description: 'will be the token for the session',
+    type: String,
+    example: 'Akasdj213',
+  })
   accessToken: string;
 }

@@ -15,6 +15,10 @@ async function bootstrap() {
       'API documentation for the Users experience and education microservice.',
     )
     .setVersion('1.0')
+    .addTag(
+      'Auth',
+      'Auth Api. Related with authorization and authentication endpoints',
+    )
     .addTag('Users', 'Users Api. Related with the Admin and Users resources')
     .build();
 

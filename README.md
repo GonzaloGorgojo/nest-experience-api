@@ -3,9 +3,14 @@
 ## Description
 
 This is an API built with NestJS. The purpose of this API is to provide endpoints for a frontend application to consume in order to retrieve and manage education and work experience from users. I will use it in my personal webpage <br>
-The Api got a login option that uses JWT security, this was made to do all operations except the ones that read data.
+The Api got a few usefull things:<br>
 
-### :computer: Technologies used
+- Login that use JWT security, this was made to do all operations except the ones that read data.
+- bcrypt hashing and salting to store passwords.
+- env variable checkings
+- automapper
+
+### :computer: Technologies/Libraries used
 
 - Nest.JS
 - Typescript
@@ -13,6 +18,9 @@ The Api got a login option that uses JWT security, this was made to do all opera
 - PostgresSql
 - JWT
 - OpenApi/Swagger
+- TypeOrm
+- Envalid
+- Bcrypt
 
 ## To run this API, you will need to have the following installed on your machine:
 

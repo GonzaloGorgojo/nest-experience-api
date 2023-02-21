@@ -1,31 +1,38 @@
 /**
- * CreateUserDto.
+ * UserOutputDto.
  *
- * Definition for CreateUserDto.
+ * Definition for UserOutputDto dto.
  *
- * @file   This file defines the input to create a user.
+ * @file   This file defines the output dto from user resource.
  * @author Gonzalo Gorgojo.
  */
 
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { AutoMap } from '@automapper/classes';
 
 /**
  * Class Summary
  *
- * Definition for CreateUserDto.
+ * Definition for UserOutputDto.
  *
- * @class CreateUserDto
+ * @class UserOutputDto
  */
 
-export class CreateUserDto {
+export class UserOutputDto {
+  @ApiProperty({
+    description: 'first name of the user',
+    type: Number,
+    example: 1,
+  })
+  @AutoMap()
+  userId: number;
+
   @ApiProperty({
     description: 'first name of the user',
     type: String,
     example: 'lebron',
   })
-  @IsNotEmpty({ message: 'firstName is required' })
-  @IsString()
+  @AutoMap()
   firstName: string;
 
   @ApiProperty({
@@ -33,8 +40,7 @@ export class CreateUserDto {
     type: String,
     example: 'James',
   })
-  @IsNotEmpty({ message: 'lastName is required' })
-  @IsString()
+  @AutoMap()
   lastName: string;
 
   @ApiProperty({
@@ -42,8 +48,7 @@ export class CreateUserDto {
     type: String,
     example: 'Super friendly folk',
   })
-  @IsNotEmpty({ message: 'description is required' })
-  @IsString()
+  @AutoMap()
   description: string;
 
   @ApiProperty({
@@ -51,8 +56,7 @@ export class CreateUserDto {
     type: String,
     example: 'example@gmail.com',
   })
-  @IsNotEmpty({ message: 'email is required' })
-  @IsString()
+  @AutoMap()
   email: string;
 
   @ApiProperty({
@@ -60,8 +64,7 @@ export class CreateUserDto {
     type: String,
     example: 'Argentina',
   })
-  @IsOptional()
-  @IsString()
+  @AutoMap()
   country?: string;
 
   @ApiProperty({
@@ -69,8 +72,7 @@ export class CreateUserDto {
     type: String,
     example: 'www.linkendin.com/lebron',
   })
-  @IsOptional()
-  @IsString()
+  @AutoMap()
   linkedin?: string;
 
   @ApiProperty({
@@ -78,8 +80,7 @@ export class CreateUserDto {
     type: String,
     example: 'www.github.com/lebron',
   })
-  @IsOptional()
-  @IsString()
+  @AutoMap()
   github?: string;
 
   @ApiProperty({
@@ -87,7 +88,6 @@ export class CreateUserDto {
     type: String,
     example: 'www.lebron.com',
   })
-  @IsOptional()
-  @IsString()
+  @AutoMap()
   extraLink?: string;
 }

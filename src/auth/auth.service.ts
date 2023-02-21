@@ -11,7 +11,8 @@ import { JwtService } from '@nestjs/jwt';
 import { DataSource } from 'typeorm';
 import { LoginDto } from './dto/login.dto';
 import { LoginOutput } from './dto/loginOutput.dto';
-import { Admin } from './model/admin.entity';
+import { Admin } from '../user/model/admin.entity';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -28,14 +29,16 @@ export class AuthService {
    *
    * @param {LoginDto} user dto input data to login.
    *
-   * @return access token if it works, throws unauthorized if not.
+   * @return {LoginOutput} access token if it works, throws unauthorized if not.
    */
   async login(user: LoginDto): Promise<LoginOutput> {
     try {
       const users = await this.dataSource.manager.find(Admin);
 
       const admin = users.find(
-        (e) => e.username == user.username && e.password == user.password,
+        async (e) =>
+          e.username == user.username &&
+          (await bcrypt.compare(user.password, e.password)),
       );
 
       if (!admin) throw new UnauthorizedException();

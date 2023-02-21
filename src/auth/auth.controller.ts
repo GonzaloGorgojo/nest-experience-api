@@ -7,7 +7,7 @@
  * @author Gonzalo Gorgojo.
  */
 import { Controller, Post, Body } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { LoginOutput } from './dto/loginOutput.dto';
@@ -30,6 +30,7 @@ export class AuthController {
     description:
       'Check if the user and password exist in Db and return a token.',
   })
+  @ApiCreatedResponse({ type: LoginOutput })
   @Post('/login')
   async login(@Body() input: LoginDto): Promise<LoginOutput> {
     return this.authService.login(input);

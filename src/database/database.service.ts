@@ -8,7 +8,8 @@
  */
 import { Injectable, Logger } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { Admin } from '../auth/model/admin.entity';
+import { Admin } from '../user/model/admin.entity';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class DatabaseService {
@@ -25,11 +26,13 @@ export class DatabaseService {
     await queryRunner.startTransaction();
 
     try {
+      const password = process.env.ADMIN_PASSWORD ?? '123456';
+      const hashedPassword = await bcrypt.hash(password, 10);
       //we create a new admin so we can use the api
       const adminData = [
         {
-          username: `${process.env.ADMIN_USER}`,
-          password: `${process.env.ADMIN_PASSWORD}`,
+          username: process.env.ADMIN_USER,
+          password: hashedPassword,
         },
       ];
 

@@ -13,7 +13,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Admin } from './model/admin.entity';
+import { Admin } from '../user/model/admin.entity';
 
 @Module({
   imports: [

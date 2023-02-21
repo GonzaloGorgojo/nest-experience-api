@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { ExperienceModule } from './experience/experience.module';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
+import { AutomapperModule } from '@automapper/nestjs';
+import { classes } from '@automapper/classes';
 
 @Module({
   imports: [
@@ -19,6 +21,9 @@ import { UserModule } from './user/user.module';
     ExperienceModule,
     DatabaseModule,
     UserModule,
+    AutomapperModule.forRoot({
+      strategyInitializer: classes(),
+    }),
   ],
   controllers: [AppController],
   providers: [],

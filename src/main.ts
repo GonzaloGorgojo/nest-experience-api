@@ -1,12 +1,29 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { cleanEnv, num, str } from 'envalid';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
-  const logger = new Logger();
+async function startApp() {
+  const logger = new Logger(startApp.name);
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+
+  //Required env variables checking
+  cleanEnv(process.env, {
+    APP_PORT: num(),
+    APP_ENV: str(),
+    APP_JWTSECRET: str(),
+
+    //Admin user env variables
+    ADMIN_USER: str(),
+    ADMIN_PASSWORD: str(),
+
+    //Postgres
+    DB_USER: str(),
+    DB_PASS: str(),
+    DB_NAME: str(),
+  });
 
   // Swagger integration
   const config = new DocumentBuilder()
@@ -33,4 +50,4 @@ async function bootstrap() {
     `Nest portfolio backend listen on http(s)://localhost:${process.env.APP_PORT} - Environment: ${process.env.APP_ENV}`,
   );
 }
-bootstrap();
+startApp();

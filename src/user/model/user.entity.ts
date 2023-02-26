@@ -32,19 +32,19 @@ export class User {
   @AutoMap()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   @AutoMap()
   country: string;
 
-  @Column()
+  @Column({ nullable: true })
   @AutoMap()
   linkedin: string;
 
-  @Column()
+  @Column({ nullable: true })
   @AutoMap()
   github: string;
 
-  @Column()
+  @Column({ nullable: true })
   @AutoMap()
   extraLink: string;
 }

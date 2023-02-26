@@ -9,6 +9,7 @@ The Api got a few usefull things:<br>
 - bcrypt hashing and salting to store passwords.
 - env variable checkings
 - automapper
+- swagger documentation (once app is running you can check at 'http://localhost:3000/api-documentation')
 
 ### :computer: Technologies/Libraries used
 

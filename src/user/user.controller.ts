@@ -72,7 +72,6 @@ export class UserController {
   @ApiResponse({ type: UserOutputDto })
   @Get('/:userEmail')
   async getuser(@Param('userEmail') userEmail: string): Promise<UserOutputDto> {
-    console.log(userEmail);
     return this.userService.getOneUser(userEmail);
   }
 

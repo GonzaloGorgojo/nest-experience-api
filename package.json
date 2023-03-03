@@ -82,6 +82,13 @@
     "typescript": "^4.7.4"
   },
   "jest": {
+    "coveragePathIgnorePatterns": [
+      ".module.(t|j)s",
+      "ormconfig.(t|j)s",
+      "ormDataSource.(t|j)s",
+      "main.(t|j)s",
+      "seed.(t|j)s"
+    ],
     "moduleFileExtensions": [
       "js",
       "json",

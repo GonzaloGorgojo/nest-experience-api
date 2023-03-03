@@ -1,3 +1,10 @@
+/**
+ * AppController unit test.
+ *
+ * @file   This file defines the Unit Tests for AppController Class.
+ * @author Gonzalo Gorgojo.
+ */
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 

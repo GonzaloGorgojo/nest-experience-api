@@ -1,3 +1,9 @@
+/**
+ * UserController class.
+ *
+ * @file   This file defines the UserController, who manage all the users related endpoints.
+ * @author Gonzalo Gorgojo.
+ */
 import {
   Body,
   Controller,
@@ -34,8 +40,8 @@ export class UserController {
       'Create one new User based on the received data and store it in Db.',
   })
   @ApiCreatedResponse({ type: UserOutputDto })
-  @Post('')
   @UseGuards(JwtAuthGuard)
+  @Post('')
   async createUser(@Body() newUser: CreateUserDto): Promise<UserOutputDto> {
     return this.userService.createUser(newUser);
   }
@@ -81,8 +87,8 @@ export class UserController {
       'Search for an existing user with the received email and update it.',
   })
   @ApiResponse({ type: UserOutputDto })
-  @Put('/update')
   @UseGuards(JwtAuthGuard)
+  @Put('/update')
   async updateUser(@Body() userBody: UpdateUserDto): Promise<UserOutputDto> {
     return this.userService.updateOneUser(userBody);
   }
@@ -93,8 +99,8 @@ export class UserController {
       'Search for an existing user with the received email and delete it.',
   })
   @ApiResponse({ type: CommonEnums.DeleteMessage })
-  @Delete('/:userEmail')
   @UseGuards(JwtAuthGuard)
+  @Delete('/:userEmail')
   async deleteUser(@Param('userEmail') userEmail: string): Promise<string> {
     return this.userService.deleteOneUser(userEmail);
   }

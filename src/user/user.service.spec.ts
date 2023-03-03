@@ -1,8 +1,15 @@
+/**
+ * UserService unit test.
+ *
+ * @file   This file defines the UserService unit test.
+ * @author Gonzalo Gorgojo.
+ */
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { createMock } from '@golevelup/nestjs-testing';
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataSource } from 'typeorm';
+import { UserMapperService } from '../mapper/userMapper.service';
 import { CreateAdminDto } from './dto/createAdmin.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
@@ -31,7 +38,11 @@ describe('UserService', () => {
           strategyInitializer: classes(),
         }),
       ],
-      providers: [UserService, { provide: DataSource, useValue: fakeDataSrc }],
+      providers: [
+        UserService,
+        UserMapperService,
+        { provide: DataSource, useValue: fakeDataSrc },
+      ],
     }).compile();
 
     service = module.get<UserService>(UserService);

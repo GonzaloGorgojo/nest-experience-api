@@ -1,3 +1,9 @@
+/**
+ * AppModule.
+ *
+ * @file   This file defines the AppModule Class.
+ * @author Gonzalo Gorgojo.
+ */
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
@@ -9,6 +15,7 @@ import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { AutomapperModule } from '@automapper/nestjs';
 import { classes } from '@automapper/classes';
+import { MapperModule } from './mapper/mapper.module';
 
 @Module({
   imports: [
@@ -24,6 +31,7 @@ import { classes } from '@automapper/classes';
     AutomapperModule.forRoot({
       strategyInitializer: classes(),
     }),
+    MapperModule,
   ],
   controllers: [AppController],
   providers: [],

@@ -1,8 +1,6 @@
 /**
  * TypeORM configuration constant.
  *
- * Definition for TypeORM configuration constant.
- *
  * @file   This file defines the TypeORM configuration constant.
  * @author Gonzalo Gorgojo.
  */

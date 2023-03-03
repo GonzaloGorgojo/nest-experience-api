@@ -1,3 +1,10 @@
+/**
+ * startApp.
+ *
+ *
+ * @file   This file defines the startApp function who manage the bootstrap of the application.
+ * @author Gonzalo Gorgojo.
+ */
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';

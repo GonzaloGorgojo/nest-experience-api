@@ -1,3 +1,9 @@
+/**
+ * UserController unit test.
+ *
+ * @file   This file defines the UserController unit test.
+ * @author Gonzalo Gorgojo.
+ */
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { createMock } from '@golevelup/nestjs-testing';

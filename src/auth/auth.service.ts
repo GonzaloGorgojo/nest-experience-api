@@ -47,6 +47,7 @@ export class AuthService {
       const loginResponse = new LoginOutput();
       loginResponse.accessToken = this.jwtService.sign(payload);
 
+      this.logger.log(` User ${user.username} has logged in`);
       return loginResponse;
     } catch (error) {
       if (error.name != 'UnauthorizedException') {

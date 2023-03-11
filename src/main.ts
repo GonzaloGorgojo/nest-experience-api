@@ -10,10 +10,12 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { cleanEnv, num, str } from 'envalid';
 import { AppModule } from './app.module';
+import helmet from 'helmet';
 
 async function startApp() {
   const logger = new Logger(startApp.name);
   const app = await NestFactory.create(AppModule);
+  app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
 
   //Required env variables checking
@@ -34,7 +36,7 @@ async function startApp() {
 
   // Swagger integration
   const config = new DocumentBuilder()
-    .setTitle('Users experience and education API')
+    .setTitle('Users job experience and education API')
     .setDescription(
       'API documentation for the Users experience and education microservice.',
     )
@@ -44,6 +46,10 @@ async function startApp() {
       'Auth Api. Related with authorization and authentication endpoints',
     )
     .addTag('Users', 'Users Api. Related with the Admin and Users resources')
+    .addTag(
+      'Experience',
+      'Experience Api. Related with the Experience of Users ',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

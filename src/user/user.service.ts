@@ -215,9 +215,9 @@ export class UserService {
   /**
    * @method deleteOneUser
    *
-   * @param {string} userEmail payload to update.
+   * @param {string} userEmail email of the user to delete.
    *
-   * @returns {string} succesfull message.
+   * @returns {string} succesfull message or error.
    */
   async deleteOneUser(userEmail: string): Promise<string> {
     try {
@@ -240,7 +240,7 @@ export class UserService {
         email: userEmail,
       });
 
-      return CommonEnums.DeleteMessage;
+      return CommonEnums.DeleteUserMessage;
     } catch (error) {
       if (error.status != HttpStatus.NOT_FOUND) {
         this.logger.error(`Method: deleteOneUser, error: ${error.message}.`);

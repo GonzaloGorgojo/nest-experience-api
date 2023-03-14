@@ -41,7 +41,7 @@ export class UserController {
   })
   @ApiCreatedResponse({ type: UserOutputDto })
   @UseGuards(JwtAuthGuard)
-  @Post('')
+  @Post('/create')
   async createUser(@Body() newUser: CreateUserDto): Promise<UserOutputDto> {
     return this.userService.createUser(newUser);
   }
@@ -53,7 +53,7 @@ export class UserController {
   })
   @ApiCreatedResponse({ type: AdminOutputDto })
   @UseGuards(JwtAuthGuard)
-  @Post('/admin')
+  @Post('/create/admin')
   async createAdminUser(
     @Body() newAdmin: CreateAdminDto,
   ): Promise<AdminOutputDto> {
@@ -65,7 +65,7 @@ export class UserController {
     description: 'Search for all existing users in DB and return them.',
   })
   @ApiResponse({ type: [UserOutputDto] })
-  @Get('all')
+  @Get('/get')
   async getAllUsers(): Promise<UserOutputDto[]> {
     return this.userService.getAllUser();
   }
@@ -76,7 +76,7 @@ export class UserController {
       'Search for an existing user with the received email and return it.',
   })
   @ApiResponse({ type: UserOutputDto })
-  @Get('/:userEmail')
+  @Get('/get/:userEmail')
   async getuser(@Param('userEmail') userEmail: string): Promise<UserOutputDto> {
     return this.userService.getOneUser(userEmail);
   }
@@ -98,9 +98,9 @@ export class UserController {
     description:
       'Search for an existing user with the received email and delete it.',
   })
-  @ApiResponse({ type: CommonEnums.DeleteMessage })
+  @ApiResponse({ type: CommonEnums.DeleteUserMessage })
   @UseGuards(JwtAuthGuard)
-  @Delete('/:userEmail')
+  @Delete('/delete/:userEmail')
   async deleteUser(@Param('userEmail') userEmail: string): Promise<string> {
     return this.userService.deleteOneUser(userEmail);
   }

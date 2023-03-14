@@ -9,6 +9,7 @@ import { InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
 import { CreateExperienceDto } from '../experience/dto/createExperience.dto';
 import { ExperienceOutputDto } from '../experience/dto/experienceOutput.dto';
+import { UpdateExperienceDto } from '../experience/dto/updateExperience.dto';
 import { Experience } from '../experience/model/experience.entity';
 
 @Injectable()
@@ -33,7 +34,34 @@ export class ExperienceMapper {
     );
 
     /** @type {Experience} => @type {ExperienceOutputDto} */
-    createMap(this.mapper, Experience, ExperienceOutputDto);
+    createMap(
+      this.mapper,
+      Experience,
+      ExperienceOutputDto,
+      forMember(
+        (d) => d.skills,
+        mapFrom((s) => s.skills),
+      ),
+      forMember(
+        (d) => d.descriptions,
+        mapFrom((s) => s.descriptions),
+      ),
+    );
+
+    /** @type {UpdateExperienceDto} => @type {Experience} */
+    createMap(
+      this.mapper,
+      UpdateExperienceDto,
+      Experience,
+      forMember(
+        (d) => d.skills,
+        mapFrom((s) => s.skills),
+      ),
+      forMember(
+        (d) => d.descriptions,
+        mapFrom((s) => s.descriptions),
+      ),
+    );
   }
 
   /**
@@ -47,6 +75,19 @@ export class ExperienceMapper {
    */
   mapExperienceDtoToExperienceEntity(dto: CreateExperienceDto): Experience {
     return this.mapper.map(dto, CreateExperienceDto, Experience);
+  }
+
+  /**
+   * mapUpdateExperienceDtoToExperience.
+   *
+   * Maps UpdateExperienceDto dto to Experience entity.
+   *
+   * @param entity UpdateExperienceDto dto to map.
+   *
+   * @return Experience Entity mapped object..
+   */
+  mapUpdateExperienceDtoToExperience(dto: UpdateExperienceDto): Experience {
+    return this.mapper.map(dto, UpdateExperienceDto, Experience);
   }
 
   /**

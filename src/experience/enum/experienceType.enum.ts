@@ -7,7 +7,7 @@
  * @author Gonzalo Gorgojo.
  */
 
-export enum ExperienceType {
+export enum ExperienceTypeEnum {
   FullTime = 'Full Time',
   PartTime = 'Part Time',
   Freelance = 'Freelance',

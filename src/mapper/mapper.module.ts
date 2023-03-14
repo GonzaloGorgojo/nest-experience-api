@@ -5,10 +5,11 @@
  * @author Gonzalo Gorgojo.
  */
 import { Module } from '@nestjs/common';
-import { UserMapperService } from './userMapper.service';
+import { ExperienceMapper } from './experience.mapper';
+import { UserMapperService } from './user.mapper';
 
 @Module({
-  providers: [UserMapperService],
-  exports: [UserMapperService],
+  providers: [UserMapperService, ExperienceMapper],
+  exports: [UserMapperService, ExperienceMapper],
 })
 export class MapperModule {}

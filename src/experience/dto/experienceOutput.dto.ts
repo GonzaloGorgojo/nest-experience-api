@@ -8,8 +8,9 @@
  */
 
 import { ApiProperty } from '@nestjs/swagger';
-import { ExperienceType } from '../enum/experienceType.enum';
+import { ExperienceTypeEnum } from '../enum/experienceType.enum';
 import { AutoMap } from '@automapper/classes';
+import { User } from '../../user/model/user.entity';
 
 /**
  * Class Summary
@@ -30,11 +31,19 @@ export class ExperienceOutputDto {
 
   @ApiProperty({
     description: 'Id of the User relationated with this experience',
-    type: String,
-    example: '123',
+    type: Number,
+    example: 123,
   })
   @AutoMap()
-  userId: string;
+  userId: number;
+
+  @ApiProperty({
+    description: ' User relationated with this experience',
+    type: User,
+    example: '{id: 1}',
+  })
+  @AutoMap()
+  user: User;
 
   @ApiProperty({
     description: 'Date when the experience started',
@@ -42,7 +51,7 @@ export class ExperienceOutputDto {
     example: '2023-03-11T19:22:42.909Z',
   })
   @AutoMap()
-  startDate: Date;
+  startDate: string;
 
   @ApiProperty({
     description: 'Date when the experience ended',
@@ -50,7 +59,7 @@ export class ExperienceOutputDto {
     example: '2023-03-11T19:22:42.909Z',
   })
   @AutoMap()
-  endDate: Date;
+  endDate: string;
 
   @ApiProperty({
     description: 'Company where this experience happened',
@@ -106,5 +115,5 @@ export class ExperienceOutputDto {
     example: 'part-time',
   })
   @AutoMap()
-  type: ExperienceType;
+  type: ExperienceTypeEnum;
 }

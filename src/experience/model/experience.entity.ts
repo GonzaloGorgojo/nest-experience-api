@@ -16,7 +16,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from '../../user/model/user.entity';
-import { ExperienceType } from '../enum/experienceType.enum';
+import { ExperienceTypeEnum } from '../enum/experienceType.enum';
 
 @Entity('experience')
 export class Experience {
@@ -25,47 +25,51 @@ export class Experience {
   @AutoMap()
   experienceId: number;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'userId' })
+  @Column({ name: 'user_id', nullable: false })
   @AutoMap()
+  userId: number;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column()
+  @Column({ type: 'timestamp with time zone', nullable: false })
   @AutoMap()
   startDate: Date;
 
-  @Column()
+  @Column({ type: 'timestamp with time zone', nullable: true })
   @AutoMap()
   endDate: Date;
 
-  @Column()
+  @Column({ nullable: false })
   @AutoMap()
   company: string;
 
-  @Column()
+  @Column({ nullable: false })
   @AutoMap()
   companyWebPage: string;
 
-  @Column()
+  @Column({ nullable: false })
   @AutoMap()
   position: string;
 
-  @Column()
+  @Column({ nullable: false })
   @AutoMap()
   location: string;
 
-  @Column('simple-array')
+  @Column('simple-array', { nullable: false })
   @AutoMap()
   skills: string[];
 
-  @Column('simple-array')
+  @Column('simple-array', { nullable: false })
   @AutoMap()
   descriptions: string[];
 
   @Column({
     type: 'enum',
-    enum: ExperienceType,
+    enum: ExperienceTypeEnum,
+    nullable: false,
   })
   @AutoMap()
-  type: ExperienceType;
+  type: ExperienceTypeEnum;
 }

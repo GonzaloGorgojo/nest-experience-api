@@ -8,8 +8,15 @@
  */
 
 import { ApiProperty } from '@nestjs/swagger';
-import { ExperienceType } from '../enum/experienceType.enum';
-import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ExperienceTypeEnum } from '../enum/experienceType.enum';
+import {
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { AutoMap } from '@automapper/classes';
 
 /**
  * Class Summary
@@ -22,30 +29,33 @@ import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class CreateExperienceDto {
   @ApiProperty({
     description: 'Id of the User relationated with this experience',
-    type: String,
-    example: '123',
+    type: Number,
+    example: 123,
   })
   @IsNotEmpty({ message: 'userId is required' })
   @IsString()
-  userId: string;
+  @AutoMap()
+  userId: number;
 
   @ApiProperty({
     description: 'Date when the experience started',
     type: String,
-    example: '2023-03-11T19:22:42.909Z',
+    example: '2023-03-11',
   })
   @IsNotEmpty({ message: 'startDate is required' })
-  @IsDate()
-  startDate: Date;
+  @IsDateString()
+  @AutoMap()
+  startDate: string;
 
   @ApiProperty({
     description: 'Date when the experience ended',
     type: String,
-    example: '2023-03-11T19:22:42.909Z',
+    example: '2023-03-11',
   })
   @IsOptional()
-  @IsDate()
-  endDate: Date;
+  @IsDateString()
+  @AutoMap()
+  endDate: string;
 
   @ApiProperty({
     description: 'Company where this experience happened',
@@ -54,6 +64,7 @@ export class CreateExperienceDto {
   })
   @IsNotEmpty({ message: 'company is required' })
   @IsString()
+  @AutoMap()
   company: string;
 
   @ApiProperty({
@@ -63,6 +74,7 @@ export class CreateExperienceDto {
   })
   @IsNotEmpty({ message: 'companyWebPage is required' })
   @IsString()
+  @AutoMap()
   companyWebPage: string;
 
   @ApiProperty({
@@ -72,6 +84,7 @@ export class CreateExperienceDto {
   })
   @IsNotEmpty({ message: 'position is required' })
   @IsString()
+  @AutoMap()
   position: string;
 
   @ApiProperty({
@@ -81,6 +94,7 @@ export class CreateExperienceDto {
   })
   @IsNotEmpty({ message: 'location is required' })
   @IsString()
+  @AutoMap()
   location: string;
 
   @ApiProperty({
@@ -90,6 +104,7 @@ export class CreateExperienceDto {
   })
   @IsNotEmpty({ message: 'skills list is required' })
   @IsString()
+  @AutoMap()
   skills: string[];
 
   @ApiProperty({
@@ -99,6 +114,7 @@ export class CreateExperienceDto {
   })
   @IsNotEmpty({ message: 'descriptions is required' })
   @IsString()
+  @AutoMap()
   descriptions: string[];
 
   @ApiProperty({
@@ -107,6 +123,7 @@ export class CreateExperienceDto {
     example: 'part-time',
   })
   @IsNotEmpty({ message: 'type is required' })
-  @IsString()
-  type: ExperienceType;
+  @IsEnum(ExperienceTypeEnum)
+  @AutoMap()
+  type: ExperienceTypeEnum;
 }

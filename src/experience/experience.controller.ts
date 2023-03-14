@@ -1,5 +1,16 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+/**
+ * ExperienceController class.
+ *
+ * @file   This file defines the ExperienceController, who manage all the experience related endpoints.
+ * @author Gonzalo Gorgojo.
+ */
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateExperienceDto } from './dto/createExperience.dto';
 import { ExperienceOutputDto } from './dto/experienceOutput.dto';
@@ -15,7 +26,7 @@ export class ExperienceController {
     description:
       'Create one Experience based on the received data, associate with one User and store it in Db.',
   })
-  @ApiCreatedResponse({ type: String })
+  @ApiCreatedResponse({ type: ExperienceOutputDto })
   @UseGuards(JwtAuthGuard)
   @Post('')
   async createExperience(
@@ -24,8 +35,14 @@ export class ExperienceController {
     return this.experienceService.createExperience(newExperience);
   }
 
-  @Get('')
-  async getExperience() {
-    return this.experienceService.getExperience();
+  @ApiOperation({
+    summary: 'Get all Experiences from one User.',
+    description:
+      'Search for all Experiences from received User in DB and retrieve them',
+  })
+  @ApiOkResponse({ type: ExperienceOutputDto })
+  @Get('/:userId')
+  async getExperience(@Param('userId') userId: string) {
+    return this.experienceService.getExperience(userId);
   }
 }

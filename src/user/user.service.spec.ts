@@ -9,7 +9,7 @@ import { AutomapperModule } from '@automapper/nestjs';
 import { createMock } from '@golevelup/nestjs-testing';
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataSource } from 'typeorm';
-import { UserMapperService } from '../mapper/userMapper.service';
+import { UserMapperService } from '../mapper/user.mapper';
 import { CreateAdminDto } from './dto/createAdmin.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';

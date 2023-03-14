@@ -13,6 +13,7 @@ import {
   IsDateString,
   IsEnum,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -33,7 +34,7 @@ export class CreateExperienceDto {
     example: 123,
   })
   @IsNotEmpty({ message: 'userId is required' })
-  @IsString()
+  @IsNumber()
   @AutoMap()
   userId: number;
 

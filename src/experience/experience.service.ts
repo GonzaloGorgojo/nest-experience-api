@@ -6,10 +6,12 @@
  */
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { CommonEnums } from '../common/common.enums';
 import { ExperienceMapper } from '../mapper/experience.mapper';
 import { User } from '../user/model/user.entity';
 import { CreateExperienceDto } from './dto/createExperience.dto';
 import { ExperienceOutputDto } from './dto/experienceOutput.dto';
+import { UpdateExperienceDto } from './dto/updateExperience.dto';
 import { Experience } from './model/experience.entity';
 
 @Injectable()
@@ -37,11 +39,11 @@ export class ExperienceService {
       if (!existingUser) {
         throw new HttpException(
           {
-            status: HttpStatus.CONFLICT,
+            status: HttpStatus.NOT_FOUND,
             message: `A user with id ${newExperience.userId} does not exists`,
             statusText: 'Conflict',
           },
-          HttpStatus.CONFLICT,
+          HttpStatus.NOT_FOUND,
         );
       }
 
@@ -57,7 +59,9 @@ export class ExperienceService {
         createdExperience,
       );
     } catch (error) {
-      this.logger.error('Error Method: createExperience');
+      if (error.status != HttpStatus.NOT_FOUND) {
+        this.logger.error('Error Method: createExperience');
+      }
       throw error;
     }
   }
@@ -70,7 +74,7 @@ export class ExperienceService {
    *
    * @return all the experience from DB.
    */
-  async getExperience(userId: string) {
+  async getExperience(userId: string): Promise<ExperienceOutputDto[]> {
     try {
       const allExperienceFromUSer: Experience[] =
         await this.datasource.manager.find(Experience, {
@@ -82,6 +86,92 @@ export class ExperienceService {
       );
     } catch (error) {
       this.logger.error('Error Method: getExperience');
+      throw error;
+    }
+  }
+
+  /**
+   * @method updateExperience
+   * Search for an User experience in DB and update it.
+   *
+   * @param {UpdateExperienceDto} experience object to update.
+   *
+   * @return the updated experience.
+   */
+  async updateExperience(
+    experience: UpdateExperienceDto,
+  ): Promise<ExperienceOutputDto> {
+    try {
+      const currentExperience = await this.datasource.manager.findBy(
+        Experience,
+        { experienceId: experience.experienceId },
+      );
+      if (!currentExperience) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            message: `There is no Experience with id ${experience.experienceId}`,
+            statusText: 'Conflict',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      const mappedExperience =
+        this.experienceMapper.mapUpdateExperienceDtoToExperience(experience);
+
+      const savedExperience = await this.datasource.manager.save(
+        Experience,
+        mappedExperience,
+      );
+
+      return this.experienceMapper.mapExperienceEntityToExperienceOutput(
+        savedExperience,
+      );
+    } catch (error) {
+      if (error.status != HttpStatus.NOT_FOUND) {
+        this.logger.error('Error Method: updateExperience');
+      }
+      throw error;
+    }
+  }
+
+  /**
+   * @method deleteExperience
+   * Search for an User experience in DB and delete it.
+   *
+   * @param {number} experienceId object to update.
+   *
+   * @return message if successfull or error if not.
+   */
+  async deleteExperience(experienceId: number): Promise<string> {
+    try {
+      const existingExperience = await this.datasource.manager.findOneBy(
+        Experience,
+        {
+          experienceId: experienceId,
+        },
+      );
+
+      if (!existingExperience) {
+        throw new HttpException(
+          {
+            status: HttpStatus.NOT_FOUND,
+            message: 'There is no experience with that id',
+            statusText: 'Not Found',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      await this.datasource.manager.delete(Experience, {
+        experienceId: experienceId,
+      });
+
+      return CommonEnums.DeleteExperienceMessage;
+    } catch (error) {
+      if (error.status != HttpStatus.NOT_FOUND) {
+        this.logger.error('Error Method: deleteExperience');
+      }
       throw error;
     }
   }

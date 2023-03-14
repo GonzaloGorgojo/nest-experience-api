@@ -7,5 +7,6 @@
  * @author Gonzalo Gorgojo.
  */
 export enum CommonEnums {
-  DeleteMessage = 'User was deleted succesfully',
+  DeleteUserMessage = 'User was deleted succesfully',
+  DeleteExperienceMessage = 'Experience was deleted succesfully',
 }

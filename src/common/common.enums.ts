@@ -9,4 +9,5 @@
 export enum CommonEnums {
   DeleteUserMessage = 'User was deleted succesfully',
   DeleteExperienceMessage = 'Experience was deleted succesfully',
+  DeleteEducationMessage = 'Education was deleted succesfully',
 }

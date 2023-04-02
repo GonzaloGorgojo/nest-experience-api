@@ -18,6 +18,7 @@ import { classes } from '@automapper/classes';
 import { MapperModule } from './mapper/mapper.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { EducationModule } from './education/education.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { APP_GUARD } from '@nestjs/core';
       strategyInitializer: classes(),
     }),
     MapperModule,
+    EducationModule,
   ],
   controllers: [AppController],
   providers: [

@@ -3,7 +3,7 @@
  *
  * Definition for Experience entity.
  *
- * @file   This file defines the Organization class.
+ * @file   This file defines the Experience class.
  * @author Gonzalo Gorgojo.
  */
 import { AutoMap } from '@automapper/classes';

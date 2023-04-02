@@ -10,7 +10,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ExperienceTypeEnum } from '../enum/experienceType.enum';
 import { AutoMap } from '@automapper/classes';
-import { User } from '../../user/model/user.entity';
 
 /**
  * Class Summary
@@ -36,14 +35,6 @@ export class ExperienceOutputDto {
   })
   @AutoMap()
   userId: number;
-
-  @ApiProperty({
-    description: ' User relationated with this experience',
-    type: User,
-    example: '{id: 1}',
-  })
-  @AutoMap()
-  user: User;
 
   @ApiProperty({
     description: 'Date when the experience started',

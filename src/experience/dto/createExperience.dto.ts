@@ -3,7 +3,7 @@
  *
  * Definition for CreateExperienceDto dto.
  *
- * @file   This file defines the input dto from to create one Experience resource.
+ * @file   This file defines the input dto to create one Experience resource.
  * @author Gonzalo Gorgojo.
  */
 

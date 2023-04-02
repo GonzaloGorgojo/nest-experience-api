@@ -15,8 +15,8 @@ import { User } from './model/user.entity';
 import { CreateAdminDto } from './dto/createAdmin.dto';
 import * as bcrypt from 'bcryptjs';
 import { UpdateUserDto } from './dto/updateUser.dto';
-import { CommonEnums } from '../common/common.enums';
-import { UserMapperService } from '../mapper/user.mapper';
+import { CommonEnums } from 'src/common/common.enums';
+import { UserMapperService } from 'src/mapper/user.mapper';
 
 @Injectable()
 export class UserService {

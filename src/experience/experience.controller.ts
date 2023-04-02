@@ -68,7 +68,9 @@ export class ExperienceController {
   @ApiResponse({ type: ExperienceOutputDto })
   @UseGuards(JwtAuthGuard)
   @Put('/update')
-  async updateExperience(@Body() experience: UpdateExperienceDto) {
+  async updateExperience(
+    @Body() experience: UpdateExperienceDto,
+  ): Promise<ExperienceOutputDto> {
     return this.experienceService.updateExperience(experience);
   }
 
@@ -78,10 +80,11 @@ export class ExperienceController {
       'Search for one Experiencee from the received params and delete it in DB',
   })
   @ApiResponse({ type: CommonEnums.DeleteExperienceMessage })
+  @UseGuards(JwtAuthGuard)
   @Delete('/delete/:experienceId')
   async deleteExperience(
     @Param('experienceId') experienceId: string,
-  ): Promise<string> {
+  ): Promise<CommonEnums.DeleteExperienceMessage> {
     return this.experienceService.deleteExperience(Number(experienceId));
   }
 }

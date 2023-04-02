@@ -50,6 +50,7 @@ async function startApp() {
       'Experience',
       'Experience Api. Related with the Experience of Users ',
     )
+    .addTag('Education', 'Education Api. Related with the Education of Users ')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -139,11 +139,13 @@ export class ExperienceService {
    * @method deleteExperience
    * Search for an User experience in DB and delete it.
    *
-   * @param {number} experienceId object to update.
+   * @param {number} experienceId object to delete.
    *
    * @return message if successfull or error if not.
    */
-  async deleteExperience(experienceId: number): Promise<string> {
+  async deleteExperience(
+    experienceId: number,
+  ): Promise<CommonEnums.DeleteExperienceMessage> {
     try {
       const existingExperience = await this.datasource.manager.findOneBy(
         Experience,

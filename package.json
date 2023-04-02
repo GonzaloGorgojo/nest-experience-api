@@ -84,6 +84,9 @@
     "typescript": "^4.7.4"
   },
   "jest": {
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    },
     "coveragePathIgnorePatterns": [
       ".module.(t|j)s",
       "ormconfig.(t|j)s",
